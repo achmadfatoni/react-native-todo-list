@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
+import Header from './components/Header';
 
 export default class App extends Component {
     constructor(props) {
@@ -8,7 +9,7 @@ export default class App extends Component {
     render() {
         return (
             <View>
-
+                <Header title="Todo App"/>
             </View>
         );
     }
