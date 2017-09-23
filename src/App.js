@@ -45,8 +45,22 @@ export default class App extends Component {
         );
     };
 
+    _renderList = () => {
+        if (this.state.data.length > 0) {
+            return (
+                <FlatList
+                    data={this.state.data}
+                    renderItem={this._renderItem}
+                    ItemSeparatorComponent={this.renderSeparator}
+                    extraData={this.state}
+                />
+            )
+        }
+
+        return <Text style={styles.noTodoStyle}>No Todos</Text>
+    };
+
     render() {
-        console.log(this.state);
         return (
             <View>
                 <Header title="Todo App"/>
@@ -55,17 +69,17 @@ export default class App extends Component {
                     onSubmit={this._onSubmit.bind(this)}
                     value={this.state.inputValue}
                 />
-                <FlatList
-                    data={this.state.data}
-                    renderItem={this._renderItem}
-                    ItemSeparatorComponent={this.renderSeparator}
-                    extraData={this.state}
-                />
+                { this._renderList() }
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    
+    noTodoStyle: {
+        fontSize: 16,
+        marginLeft: 12,
+        paddingBottom: 10,
+        paddingTop: 10
+    }
 });
