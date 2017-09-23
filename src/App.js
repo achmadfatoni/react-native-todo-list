@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Header from './components/Header';
 import TodoItem from './components/TodoItem';
+import TodoForm from './components/TodoForm';
 
 export default class App extends Component {
     constructor(props) {
@@ -35,6 +36,7 @@ export default class App extends Component {
         return (
             <View>
                 <Header title="Todo App"/>
+                <TodoForm/>
                 <FlatList
                     data={this.state.data}
                     renderItem={this._renderItem}
