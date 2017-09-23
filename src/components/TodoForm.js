@@ -5,13 +5,15 @@ export default class TodoForm extends Component {
     constructor(props) {
         super(props);
     }
+
     render() {
         return (
             <View style={styles.container}>
                 <TextInput
+                    onChangeText={this.props.onChangeText}
                     value={this.props.value}
                     style={styles.input}/>
-                <TouchableOpacity style={styles.buttonContainer} >
+                <TouchableOpacity style={styles.buttonContainer} onPress={this.props.onSubmit}>
                     <Text style={styles.buttonText}>ADD</Text>
                 </TouchableOpacity>
             </View>
