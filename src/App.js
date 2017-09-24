@@ -15,16 +15,22 @@ export default class App extends Component {
 
     _renderItem = ({item}) => (
         <TodoItem
-            id={item.id}
-            title={item.title}
+            item={item}
+            onPressItem={this._onPressItem}
         />
     );
 
     _onChangeText = (value) => this.setState({ inputValue: value });
+    _onPressItem = (item) => {
+        Alert.alert('Action', 'Choose your action', [
+            { text: 'Edit', onPress: () => console.log('edit button pressed') },
+            { text: 'Delete', onPress: () => console.log('delete button pressed') },
+        ]);
+    };
     _onSubmit = () => {
         const { inputValue, data } = this.state;
         if (inputValue === '') {
-            return Alert.alert('Todo cannot be empty');
+            return Alert.alert('Error', 'Todo cannot be empty');
         }
 
         let todos = data;

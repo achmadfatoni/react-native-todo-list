@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default class TodoItem extends Component {
     constructor(props) {
         super(props);
     }
     render() {
+        const { item, onPressItem } = this.props;
+        console.log(item);
         return (
-            <View>
-                <Text style={styles.textStyle}>{this.props.title}</Text>
-            </View>
+            <TouchableOpacity onPress={() => onPressItem(item)}>
+                <Text style={styles.textStyle}>{item.title}</Text>
+            </TouchableOpacity>
         );
     }
 }
