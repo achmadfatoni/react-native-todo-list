@@ -6,6 +6,26 @@ export default class TodoForm extends Component {
         super(props);
     }
 
+    _renderButton = () => {
+        if (this.props.editMode) {
+            return (
+                <View>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.props.onCancelUpdate}>
+                        <Text style={styles.buttonText}>Cancel</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.props.onUpdate}>
+                        <Text style={styles.buttonText}>UPDATE</Text>
+                    </TouchableOpacity>
+                </View>
+            );
+        }
+
+        return (
+            <TouchableOpacity style={styles.buttonContainer} onPress={this.props.onSubmit}>
+                <Text style={styles.buttonText}>ADD</Text>
+            </TouchableOpacity>
+        );
+    };
     render() {
         return (
             <View style={styles.container}>
@@ -13,9 +33,7 @@ export default class TodoForm extends Component {
                     onChangeText={this.props.onChangeText}
                     value={this.props.value}
                     style={styles.input}/>
-                <TouchableOpacity style={styles.buttonContainer} onPress={this.props.onSubmit}>
-                    <Text style={styles.buttonText}>ADD</Text>
-                </TouchableOpacity>
+                { this._renderButton() }
             </View>
         );
     }

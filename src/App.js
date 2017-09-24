@@ -9,7 +9,9 @@ export default class App extends Component {
         super(props);
         this.state = {
             inputValue: '',
-            data: []
+            data: [],
+            editMode: false,
+            editItem: null,
         }
     }
 
@@ -20,6 +22,10 @@ export default class App extends Component {
         />
     );
 
+    _onCancelUpdate = () => {
+        this.setState({ editMode: false, inputValue: '', editItem: null });
+    };
+    
     _onChangeText = (value) => this.setState({ inputValue: value });
     _onDeleteItem = (item) => {
       let todos = this.state.data;
@@ -29,10 +35,15 @@ export default class App extends Component {
 
       this.setState({ data: todos});
     };
+
+    _onEditItem = (item) => {
+      this.setState({ editMode: true, inputValue: item.title, editItem: item });
+    };
+
     _onPressItem = (item) => {
         Alert.alert('Action', 'Choose your action', [
             { text: 'Cancel', onPress: () => console.log('cancel pressed'), style: 'cancel' },
-            { text: 'Edit', onPress: () => console.log('edit button pressed') },
+            { text: 'Edit', onPress: () => this._onEditItem(item) },
             { text: 'Delete', onPress: () => this._onDeleteItem(item) },
         ]);
     };
@@ -45,6 +56,23 @@ export default class App extends Component {
         let todos = data;
         todos.push({ key: Math.random(), title: inputValue });
         this.setState({ inputValue: '', data: todos});
+    };
+
+    _onUpdate = () => {
+        console.log('updating');
+        const { inputValue, data, editItem } = this.state;
+        if (inputValue === '') {
+            return Alert.alert('Error', 'Todo cannot be empty');
+        }
+
+        let todos = data;
+        todos.forEach((todo, index) => {
+            if (todo.key === editItem.key) {
+                todo.title = inputValue;
+            }
+        });
+
+        this.setState({ inputValue: '', data: todos, editItem: null, editMode: false});
     };
 
     renderSeparator = () => {
@@ -79,7 +107,10 @@ export default class App extends Component {
                 <Header title="Todo App"/>
                 <TodoForm
                     onChangeText={this._onChangeText.bind(this)}
+                    onCancelUpdate={this._onCancelUpdate.bind(this)}
+                    onUpdate={this._onUpdate.bind(this)}
                     onSubmit={this._onSubmit.bind(this)}
+                    editMode={this.state.editMode}
                     value={this.state.inputValue}
                 />
                 { this._renderList() }
