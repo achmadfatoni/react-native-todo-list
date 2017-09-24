@@ -21,10 +21,19 @@ export default class App extends Component {
     );
 
     _onChangeText = (value) => this.setState({ inputValue: value });
+    _onDeleteItem = (item) => {
+      let todos = this.state.data;
+      todos = todos.filter((todo) => {
+          return todo.key !== item.key;
+      });
+
+      this.setState({ data: todos});
+    };
     _onPressItem = (item) => {
         Alert.alert('Action', 'Choose your action', [
+            { text: 'Cancel', onPress: () => console.log('cancel pressed'), style: 'cancel' },
             { text: 'Edit', onPress: () => console.log('edit button pressed') },
-            { text: 'Delete', onPress: () => console.log('delete button pressed') },
+            { text: 'Delete', onPress: () => this._onDeleteItem(item) },
         ]);
     };
     _onSubmit = () => {
@@ -34,9 +43,7 @@ export default class App extends Component {
         }
 
         let todos = data;
-        console.log(todos);
         todos.push({ key: Math.random(), title: inputValue });
-        console.log(todos);
         this.setState({ inputValue: '', data: todos});
     };
 

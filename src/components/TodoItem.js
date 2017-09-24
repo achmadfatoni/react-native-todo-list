@@ -7,7 +7,6 @@ export default class TodoItem extends Component {
     }
     render() {
         const { item, onPressItem } = this.props;
-        console.log(item);
         return (
             <TouchableOpacity onPress={() => onPressItem(item)}>
                 <Text style={styles.textStyle}>{item.title}</Text>
